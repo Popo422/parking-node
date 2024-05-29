@@ -62,7 +62,8 @@ class ParkingLot {
 
     // Check for continuous rate
     const lastExitTime = this.lastExitTime.get(vehicle);
-
+    this.lastExitTime.set(vehicle, vehicle.exitTime);
+    this.parkedVehicles.delete(vehicle.entryTime.getTime());
     if (
       lastExitTime &&
       (vehicle.entryTime - lastExitTime) / (1000 * 60 * 60) <= 1
@@ -76,10 +77,6 @@ class ParkingLot {
       );
     }
 
-    this.lastExitTime.set(vehicle, vehicle.exitTime);
-    console.log(vehicle, vehicle.exitTime);
-    console.log("lastExitTime", this.lastExitTime);
-    this.parkedVehicles.delete(vehicle.entryTime.getTime());
     return fee;
   }
 
